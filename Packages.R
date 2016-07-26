@@ -1,7 +1,7 @@
 ### Packages.R
 ## Contains scripts to install/load all of the required packages.
 
-required_packages <- c("leaflet", "shiny", "dplyr", "ggplot2")
+required_packages <- c("leaflet", "shiny", "dplyr", "ggplot2", "rgdal", "rgeos")
 new_packages <- required_packages[!(required_packages %in% installed.packages()[,"Package"])]
 
 load_packages <- function(x) {

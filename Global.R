@@ -14,3 +14,9 @@ cleanpostcodes$suburb <- tolower(cleanpostcodes$suburb)
 
 cleantable <-  dplyr::left_join(deid, cleanpostcodes, by = c("City" = "suburb"))
 cleantable <- na.omit(cleantable)
+
+hne <- readOGR("LHDMapfiles/HNELHD only.shp", layer = "HNELHD only", verbose = FALSE)
+
+map.bounds <- c(gBoundary(hne)@bbox)
+
+map.buffer <- c(gBuffer(hne)@bbox)

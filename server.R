@@ -38,11 +38,43 @@ shinyServer(function(input, output, session) {
       
       clearShapes() %>%
       
-      addMarkers(
+      addCircleMarkers(
         lat = ~lat,
-        lng = ~lon
-          
-        )
+        lng = ~lon,
+        radius = 6,
+        weight = 2,
+        opacity = 1,
+        fillOpacity = 0.8
+        
+#         clusterOptions = markerClusterOptions(
+#           
+#           zoomToBoundsOnClick = TRUE,
+#           removeOutsideVisibleBounds = TRUE,
+#           disableClusteringAtZoom = 10
+#           )
+        ) %>%
+      addPolylines(
+        data = hne,
+        layerId = "LHD"
+      ) %>%
+      
+      setMaxBounds(
+      
+        lat1 = map.buffer[4],
+        lat2 = map.buffer[2],
+        lng1 = map.buffer[3],
+        lng2 = map.buffer[1]
+      
+      ) %>%
+      
+      fitBounds(
+        
+        lat1 = map.bounds[4],
+        lat2 = map.bounds[2],
+        lng1 = map.bounds[3],
+        lng2 = map.bounds[1]
+        
+      )
       
   })
   })
