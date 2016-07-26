@@ -7,11 +7,26 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shiny)
+source("Packages.R")
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
    
-  output$
+  map <- leaflet() %>% 
+    addTiles()
+
+  output$map <- renderLeaflet(map)
   
-})
+  leafletProxy(
+    "map",
+    data = cleantable
+  ) %>%
+    
+  addMarkers(
+    lng = ~lon,
+    lat = ~lat
+  )
+  
+  })
+
+

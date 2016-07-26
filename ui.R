@@ -7,13 +7,13 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shiny)
+source("Packages.R")
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
   
   # Application title
-  titlePanel("Old Faithful Geyser Data"),
+  titlePanel("HARP Map Data"),
   
   # Sidebar with a slider input for number of bins 
   sidebarLayout(
@@ -23,7 +23,7 @@ shinyUI(fluidPage(
     
     # Show a plot of the generated distribution
     mainPanel(
-       
+      leafletOutput("map") 
     )
   )
 ))
