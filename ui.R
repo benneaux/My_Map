@@ -8,6 +8,7 @@
 #
 
 source("Packages.R")
+source("Global.R")
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
@@ -23,7 +24,7 @@ shinyUI(fluidPage(
     
     # Show a plot of the generated distribution
     mainPanel(
-      leafletOutput("map") 
+      leafletOutput("map")
     )
   )
 ))

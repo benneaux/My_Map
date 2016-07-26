@@ -8,25 +8,50 @@
 #
 
 source("Packages.R")
+source("Global.R")
 
 # Define server logic required to draw a histogram
-shinyServer(function(input, output) {
+shinyServer(function(input, output, session) {
    
-  map <- leaflet() %>% 
-    addTiles()
-
+  
+  map = leaflet() %>%
+    addProviderTiles(
+      "CartoDB.Positron",
+      options = providerTileOptions(
+        noWrap = TRUE,
+        #minZoom = 7,
+        unloadInvisibleTiles = TRUE
+      )
+    )
+  
   output$map <- renderLeaflet(map)
   
-  leafletProxy(
-    "map",
-    data = cleantable
-  ) %>%
+  observe({
     
-  addMarkers(
-    lng = ~lon,
-    lat = ~lat
-  )
-  
+    leafletProxy(
+      "map",
+      data = cleantable
+    ) %>%
+      
+      clearShapes() %>%
+      
+      addCircleMarkers(
+        lat = ~lat,
+        lng = ~lon,
+        radius = 6,
+        weight = 2,
+        opacity = 1,
+        fillOpacity = 0.8,
+        
+        clusterOptions = markerClusterOptions(
+          
+          zoomToBoundsOnClick = TRUE,
+          removeOutsideVisibleBounds = TRUE,
+          disableClusteringAtZoom = 10
+          
+        )
+      )
+  })
   })
 
 

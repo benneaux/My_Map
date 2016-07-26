@@ -13,3 +13,4 @@ levels(deid[["City"]]) <- tolower(levels(deid[["City"]]))
 cleanpostcodes$suburb <- tolower(cleanpostcodes$suburb)
 
 cleantable <-  dplyr::left_join(deid, cleanpostcodes, by = c("City" = "suburb"))
+cleantable <- as.data.frame(cleantable)
