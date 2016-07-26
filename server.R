@@ -10,6 +10,9 @@
 source("Packages.R")
 source("Global.R")
 
+set.seed(100)
+cleantable <- cleantable[sample.int(nrow(cleantable), 1000),]
+
 # Define server logic required to draw a histogram
 shinyServer(function(input, output, session) {
    
@@ -35,22 +38,12 @@ shinyServer(function(input, output, session) {
       
       clearShapes() %>%
       
-      addCircleMarkers(
+      addMarkers(
         lat = ~lat,
-        lng = ~lon,
-        radius = 6,
-        weight = 2,
-        opacity = 1,
-        fillOpacity = 0.8,
-        
-        clusterOptions = markerClusterOptions(
-          
-          zoomToBoundsOnClick = TRUE,
-          removeOutsideVisibleBounds = TRUE,
-          disableClusteringAtZoom = 10
+        lng = ~lon
           
         )
-      )
+      
   })
   })
 
