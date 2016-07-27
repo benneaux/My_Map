@@ -22,18 +22,29 @@ shinyServer(function(input, output, session) {
       "CartoDB.Positron",
       options = providerTileOptions(
         noWrap = TRUE,
-        #minZoom = 7,
+        minZoom = 6,
         unloadInvisibleTiles = TRUE
       )
     )
   
   output$map <- renderLeaflet(map)
   
-  observe({
+  OOSInBounds <- reactive({
+    if (is.null(input$map_bounds))
+      return(cleantable[FALSE,])
+    bounds <- input$map_bounds
+    latRng <- range(bounds$north, bounds$south)
+    lngRng <- range(bounds$east, bounds$west)
     
+    subset(sumtable,
+           lat >= latRng[1] & lat <= latRng[2] &
+             lon >= lngRng[1] & lon <= lngRng[2])
+  })
+  
+  observe({
     leafletProxy(
       "map",
-      data = cleantable
+      data = sumtable
     ) %>%
       
       clearShapes() %>%
